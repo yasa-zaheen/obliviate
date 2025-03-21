@@ -1,3 +1,12 @@
+"use client";
+
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
+
 export default function Home() {
-  return <div>hello world</div>;
+  return (
+    <div>
+      {/* <SignInButton /> */}
+      <SignUpButton />
+    </div>
+  );
 }

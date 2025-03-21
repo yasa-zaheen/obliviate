@@ -1,9 +1,18 @@
+"use client";
+
 import { SignUp } from "@clerk/nextjs";
 import { GalleryVerticalEnd } from "lucide-react";
 
+import { motion } from "motion/react";
+
 export default function LoginPage() {
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ type: "spring" }}
+      className="grid min-h-svh lg:grid-cols-2"
+    >
       <div className="relative hidden bg-muted lg:block">
         <img
           src="https://images.unsplash.com/photo-1741114056855-d4e6d12197df?q=80&w=2328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -24,6 +33,6 @@ export default function LoginPage() {
           <SignUp />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

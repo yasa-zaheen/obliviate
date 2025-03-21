@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider, SignInButton } from "@clerk/nextjs";
+import MotionWrapper from "./MotionWrapper";
 
 export const metadata: Metadata = {
   title: "Obliviate",
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <MotionWrapper>{children}</MotionWrapper>
+        </body>
       </html>
     </ClerkProvider>
   );

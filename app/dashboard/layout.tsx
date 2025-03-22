@@ -48,7 +48,7 @@ export default function DashboardLayout({
             <NavActions />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 px-4 py-4">{children}</div>
+        <div className="flex flex-1 flex-col gap-4 px-4">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

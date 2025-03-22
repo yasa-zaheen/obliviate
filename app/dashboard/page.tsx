@@ -1,3 +1,9 @@
+import FileInput from "@/components/FileInput";
+
 export default function Page() {
-  return <div>This is the rest of the page</div>;
+  return (
+    <div>
+      <FileInput />
+    </div>
+  );
 }

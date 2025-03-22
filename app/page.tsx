@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "motion/react";
 import Image from "next/image";
+
 import HomeNav from "@/components/HomeNav";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
+
+import { motion } from "motion/react";
 
 export default function Home() {
   return (
@@ -44,10 +45,6 @@ export default function Home() {
         </div>
 
         {/* Rest of the stuff container */}
-        <div>
-          <p>World class questions, at your fingertips!</p>
-          <SignInButton />
-        </div>
       </div>
     </div>
   );

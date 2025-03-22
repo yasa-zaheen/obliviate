@@ -12,6 +12,7 @@ function HomeNav() {
         <GalleryVerticalEnd className="size-4" />
         Obliviate Inc.
       </div>
+
       {/* Other buttons */}
       <div className="flex space-x-6">
         <Link href="#">Features</Link>
@@ -19,6 +20,7 @@ function HomeNav() {
         <Link href="#">Resources</Link>
         <Link href="#">Pricing</Link>
       </div>
+
       {/* Buttons */}
       <SignInButton />
     </div>

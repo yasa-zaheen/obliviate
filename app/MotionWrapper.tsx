@@ -7,7 +7,7 @@ function MotionWrapper({ children }: { children: React.ReactNode }) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ type: "spring" }}
+      transition={{ type: "spring", duration: 2.5 }}
     >
       {children}
     </motion.div>

@@ -1,8 +1,5 @@
 "use client";
 
-// Use React
-
-// ShadCn
 import { AppSidebar } from "@/components/app-sidebar";
 import { NavActions } from "@/components/nav-actions";
 import {
@@ -18,9 +15,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-// Framer
-import { motion } from "motion/react";
-
 export default function DashboardLayout({
   children,
 }: {
@@ -28,9 +22,14 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
+      {/* Left Sidebar */}
       <AppSidebar />
+
+      {/* Right Section */}
       <SidebarInset>
+        {/* Top bar */}
         <header className="flex h-14 shrink-0 items-center gap-2">
+          {/* Button and Title */}
           <div className="flex flex-1 items-center gap-2 px-3">
             <SidebarTrigger />
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -44,10 +43,14 @@ export default function DashboardLayout({
               </BreadcrumbList>
             </Breadcrumb>
           </div>
+
+          {/* Nav Actions */}
           <div className="ml-auto px-3">
             <NavActions />
           </div>
         </header>
+
+        {/* Rest of the page content */}
         <div className="flex flex-1 flex-col gap-4 px-4">{children}</div>
       </SidebarInset>
     </SidebarProvider>

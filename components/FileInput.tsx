@@ -35,7 +35,7 @@ export default function FileInput() {
 
     const { data, error } = await supabase.storage
       .from("files")
-      .upload(`${user?.emailAddresses[0].emailAddress}-${file!.name}`, file!);
+      .upload(`${file!.name}`, file!);
     if (error) {
       console.log(error);
     } else {

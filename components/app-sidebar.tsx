@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import * as React from "react";
+import { useEffect, useState, useTransition } from "react";
 
 // Lucide
 import {
@@ -23,6 +23,9 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
+
+// Supabase
+import { createClient } from "@/utils/supabase/client";
 
 // Clerk
 import { UserButton, useUser } from "@clerk/nextjs";
@@ -87,6 +90,27 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
 
+  const supabase = createClient();
+
+  const [isPending, startTransition] = useTransition();
+
+  const [userData, setUserData] = useState<any>();
+
+  useEffect(() => {
+    startTransition(async () => {
+      const { data, error } = await supabase
+        .from("userFiles")
+        .select("*")
+        .eq("email", user?.emailAddresses[0].emailAddress);
+
+      if (data?.length !== 0) {
+        setUserData(data);
+      }
+    });
+  }, [user]);
+
+  console.log(userData);
+
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
@@ -102,8 +126,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavFavorites favorites={data.favorites} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        {userData && userData.length !== 0 ? (
+          <NavFavorites favorites={userData} />
+        ) : null}
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

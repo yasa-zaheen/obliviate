@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ArrowUpRight,
@@ -6,7 +6,7 @@ import {
   MoreHorizontal,
   StarOff,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -23,29 +23,39 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export function NavFavorites({
   favorites,
 }: {
   favorites: {
-    name: string
-    url: string
-    emoji: string
-  }[]
+    id: string;
+    email: string;
+    filePath: string;
+    path: string;
+  }[];
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
+
+  function removeFirstEmailAndHyphen(input: string): string {
+    // Regular expression to match the first email and the following hyphen
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+ - /;
+    return input.replace(emailRegex, "");
+  }
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Favorites</SidebarGroupLabel>
+      <SidebarGroupLabel>Files</SidebarGroupLabel>
       <SidebarMenu>
         {favorites.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild>
-              <a href={item.url} title={item.name}>
-                <span>{item.emoji}</span>
-                <span>{item.name}</span>
+              <a
+                href={item.filePath}
+                title={removeFirstEmailAndHyphen(item.path)}
+              >
+                {/* <span>{item.emoji}</span> */}
+                <span>💻 {removeFirstEmailAndHyphen(item.path)}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
@@ -82,13 +92,13 @@ export function NavFavorites({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
-        <SidebarMenuItem>
+        {/* <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <MoreHorizontal />
             <span>More</span>
           </SidebarMenuButton>
-        </SidebarMenuItem>
+        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }

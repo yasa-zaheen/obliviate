@@ -1,8 +1,11 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button";
 import { useState } from "react";
+
+import { Button } from "./ui/button";
+import { Input } from "@/components/ui/input";
+
+import { useUser } from "@clerk/nextjs";
 
 import { createClient } from "@/utils/supabase/client";
 
@@ -10,6 +13,9 @@ import { createClient } from "@/utils/supabase/client";
 
 export default function FileInput() {
   const supabase = createClient();
+
+  const { user } = useUser();
+
   const [file, setFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,22 +24,26 @@ export default function FileInput() {
   };
 
   const handleUpload = async () => {
+    if (!file) alert("No file uploaded");
+
+    await supabase.from("users").insert({
+      email: user?.emailAddresses[0].emailAddress,
+    });
+
     const formData = new FormData();
+    formData.append("file", file!);
 
-    console.log("Uploading");
-
-    if (file) {
-      formData.append("file", file);
-    }
-
-    // Upload file using standard upload. Change this to a server action later on.
     const { data, error } = await supabase.storage
       .from("files")
-      .upload(`${file?.name}`, file!);
+      .upload(`${user?.emailAddresses[0].emailAddress}-${file!.name}`, file!);
     if (error) {
       console.log(error);
     } else {
-      console.log("Success");
+      await supabase.from("userFiles").insert({
+        email: user?.emailAddresses[0].emailAddress,
+        filePath: data.fullPath,
+        path: data.path,
+      });
     }
   };
 

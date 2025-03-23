@@ -36,7 +36,7 @@ const data = {
     },
     {
       title: "Home",
-      url: "/dashboard",
+      url: "dashboard",
       icon: Home,
       isActive: true,
     },

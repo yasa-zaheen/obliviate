@@ -28,6 +28,7 @@ export default function DashboardLayout({
 }) {
   // Router Logic
   const pathname = usePathname();
+
   return (
     <SidebarProvider>
       {/* Left Sidebar */}

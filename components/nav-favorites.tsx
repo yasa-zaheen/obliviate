@@ -1,15 +1,10 @@
 "use client";
 
 // Next
+import { usePathname } from "next/navigation";
 
 // Components
-import {
-  ArrowUpRight,
-  // Link,
-  MoreHorizontal,
-  StarOff,
-  Trash2,
-} from "lucide-react";
+import { ArrowUpRight, MoreHorizontal, StarOff, Trash2 } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -39,13 +34,9 @@ export function NavFavorites({
     path: string;
   }[];
 }) {
-  const { isMobile } = useSidebar();
+  const pathname = usePathname();
 
-  function removeFirstEmailAndHyphen(input: string): string {
-    // Regular expression to match the first email and the following hyphen
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+ - /;
-    return input.replace(emailRegex, "");
-  }
+  const { isMobile } = useSidebar();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -54,8 +45,16 @@ export function NavFavorites({
         {favorites.map((item) => (
           <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild>
-              <Link href={`/dashboard/${item.id}`}>
-                {removeFirstEmailAndHyphen(item.path)}
+              <Link
+                href={`/dashboard/${item.id}`}
+                className={`${
+                  pathname.split("/")[pathname.split("/").length - 1] ===
+                  item.id
+                    ? "bg-black text-white pointer-events-none"
+                    : ""
+                } active:scale-95`}
+              >
+                {item.path}
               </Link>
             </SidebarMenuButton>
             <DropdownMenu>
@@ -92,12 +91,6 @@ export function NavFavorites({
             </DropdownMenu>
           </SidebarMenuItem>
         ))}
-        {/* <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
-            <MoreHorizontal />
-            <span>More</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem> */}
       </SidebarMenu>
     </SidebarGroup>
   );

@@ -1,8 +1,11 @@
 "use client";
 
+// Next
+
+// Components
 import {
   ArrowUpRight,
-  Link,
+  // Link,
   MoreHorizontal,
   StarOff,
   Trash2,
@@ -24,6 +27,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 
 export function NavFavorites({
   favorites,
@@ -50,13 +54,9 @@ export function NavFavorites({
         {favorites.map((item) => (
           <SidebarMenuItem key={item.id}>
             <SidebarMenuButton asChild>
-              <a
-                href={item.filePath}
-                title={removeFirstEmailAndHyphen(item.path)}
-              >
-                {/* <span>{item.emoji}</span> */}
-                <span>💻 {removeFirstEmailAndHyphen(item.path)}</span>
-              </a>
+              <Link href={`/dashboard/${item.id}`}>
+                {removeFirstEmailAndHyphen(item.path)}
+              </Link>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -76,7 +76,7 @@ export function NavFavorites({
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Link className="text-muted-foreground" />
+                  {/* <Link className="text-muted-foreground" /> */}
                   <span>Copy Link</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>

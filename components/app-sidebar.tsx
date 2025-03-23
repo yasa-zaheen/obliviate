@@ -45,7 +45,7 @@ const data = {
     },
     {
       title: "Home",
-      url: "#",
+      url: "/dashboard",
       icon: Home,
       isActive: true,
     },
@@ -108,8 +108,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       }
     });
   }, [user]);
-
-  console.log(userData);
 
   return (
     <Sidebar className="border-r-0" {...props}>

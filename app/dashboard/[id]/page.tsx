@@ -13,7 +13,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
 
   // Supabase
   const supabase = createClient();
-  const { data } = await supabase.from("userFiles").select("*").eq("id", id);
+  const { data } = await supabase.from("files").select("*").eq("id", id);
 
   // Open AI
 

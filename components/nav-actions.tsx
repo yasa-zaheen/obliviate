@@ -4,18 +4,10 @@ import * as React from "react";
 import {
   ArrowDown,
   ArrowUp,
-  Bell,
-  Copy,
   CornerUpLeft,
-  CornerUpRight,
-  FileText,
-  GalleryVerticalEnd,
-  LineChart,
   Link,
   MoreHorizontal,
-  Settings2,
   Star,
-  Trash,
   Trash2,
 } from "lucide-react";
 
@@ -66,10 +58,6 @@ const data = [
 
 export function NavActions() {
   const [isOpen, setIsOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsOpen(true);
-  }, []);
 
   return (
     <div className="flex items-center gap-2 text-sm">

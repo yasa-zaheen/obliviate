@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 // Components
 import { Button } from "./ui/button";
@@ -12,11 +12,31 @@ import { useUser } from "@clerk/nextjs";
 
 // Supabase
 import { createClient } from "@/utils/supabase/client";
+import LoadingCircleSpinner from "./Spinner";
+
+// Framer
+import { motion } from "motion/react";
+
+import { toast } from "sonner";
+import AlertProvider from "./AlertProvider";
+
+import parsePdf from "@/utils/parsePdf";
+import uploadFile from "@/actions/uploadFile";
+import addFileToDatabase from "@/actions/addFileToDatabase";
+import { useRouter } from "next/navigation";
+
+// Actions
 
 export default function FileInput() {
+  // Next
+  const router = useRouter();
+
   // States
   const [file, setFile] = useState<File | null>(null);
-  const [extractedText, setExtractedText] = useState(null);
+  const [fileAlert, setFileAlert] = useState(false);
+
+  // Transitions
+  const [isPending, startTransition] = useTransition();
 
   // Clerk
   const { user } = useUser();
@@ -30,77 +50,50 @@ export default function FileInput() {
     setFile(selectedFile);
   };
 
-  const handleUpload = async () => {
+  const handleFileUpload = async () => {
     // Handle if no file is uploaded
     if (!file) {
-      alert("No file uploaded");
+      setFileAlert(true);
       return;
     }
 
-    // Read file and send it to the server
-    const formData = new FormData();
-    formData.append("file", file);
+    setFileAlert(false);
 
-    // Send request to api/parse-pdf
-    try {
-      const response = await fetch("/api/parse-pdf", {
-        method: "POST",
-        body: formData,
-      });
+    // TODO: Upload file to storage
 
-      if (!response.ok) {
-        throw new Error("Failed to parse PDF");
-      }
+    startTransition(async () => {
+      const formData = new FormData();
+      formData.append("file", file);
 
-      const result = await response.json();
-      setExtractedText(result.text);
-    } catch (error) {
-      console.log(error);
-    }
+      // Send request to api/parse-pdf
+      const extractedText = await parsePdf(file);
+      const uploadRef = await uploadFile(file);
+      const databaseRef = await addFileToDatabase(uploadRef!, extractedText);
 
-    // Send request to api/workers-ai
-    try {
-      console.log(extractedText);
-      const response = await fetch("/api/workers-ai", {
-        method: "POST",
-        body: extractedText,
-      });
+      toast("Document uploaded successfully.");
 
-      const data = await response.json();
-    } catch (error) {
-      console.log(error);
-    }
-
-    // Create a user in the users table in the DB
-    // await supabase.from("users").insert({
-    //   email: user?.emailAddresses[0].emailAddress,
-    // });
-
-    // // Upload the file to Storage
-    // const { data, error } = await supabase.storage
-    //   .from("files")
-    //   .upload(`${file!.name}`, file!);
-    // if (error) {
-    //   console.log(error);
-    // } else {
-    //   // Add file information to userFiles table in DB
-    //   await supabase.from("userFiles").insert({
-    //     email: user?.emailAddresses[0].emailAddress,
-    //     filePath: data.fullPath,
-    //     path: data.path,
-    //   });
-    // }
+      router.push(`/dashboard/${databaseRef![0].id}`);
+    });
   };
 
   return (
-    <div className="flex space-x-2">
-      <Input
-        id="file-input"
-        type="file"
-        className="border-dashed"
-        onChange={handleFileChange}
-      />
-      <Button onClick={handleUpload}>Upload File</Button>
+    <div className="flex flex-col space-y-4">
+      <div className="flex space-x-2">
+        <Input
+          id="file-input"
+          type="file"
+          className="border-dashed"
+          onChange={handleFileChange}
+        />
+        <Button
+          onClick={handleFileUpload}
+          className="hover:shadow-xl cursor-pointer"
+          disabled={isPending}
+        >
+          {!isPending ? <p>Upload File</p> : <LoadingCircleSpinner />}
+        </Button>
+      </div>
+      {fileAlert ? <AlertProvider /> : null}
     </div>
   );
 }

@@ -99,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   useEffect(() => {
     startTransition(async () => {
       const { data, error } = await supabase
-        .from("userFiles")
+        .from("files")
         .select("*")
         .eq("email", user?.emailAddresses[0].emailAddress);
 

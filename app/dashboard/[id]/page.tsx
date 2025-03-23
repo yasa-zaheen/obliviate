@@ -2,8 +2,10 @@
 import { createClient } from "@/utils/supabase/client";
 
 // ShadCn UI
-
 import { Skeleton } from "@/components/ui/skeleton";
+
+// Components
+import SummarizeButton from "@/components/SummarizeButton";
 
 async function Page({ params }: { params: Promise<{ id: string }> }) {
   // Dynamic Routing
@@ -13,9 +15,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
   const supabase = createClient();
   const { data } = await supabase.from("userFiles").select("*").eq("id", id);
 
-  console.log(data);
-
-  // Get document information from database
+  // Open AI
 
   return (
     <div>
@@ -24,6 +24,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
       ) : (
         <Skeleton className="w-full h-[30px] rounded-lg" />
       )}
+      <SummarizeButton />
     </div>
   );
 }

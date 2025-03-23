@@ -9,9 +9,7 @@ import { NavActions } from "@/components/nav-actions";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +27,6 @@ export default function DashboardLayout({
 }) {
   // Router Logic
   const pathname = usePathname();
-  console.log(pathname.split("/"));
   return (
     <SidebarProvider>
       {/* Left Sidebar */}
@@ -48,23 +45,19 @@ export default function DashboardLayout({
               {pathname && pathname.split("/").length > 2 ? (
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <Link href={"/dashboard"}>
-                      <BreadcrumbLink>Dashboard</BreadcrumbLink>
-                    </Link>
+                    <Link href={"/dashboard"}>Dashboard</Link>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <Link href={`/dashboard/${pathname.split("/")[2]}`}>
-                      <BreadcrumbLink>{pathname.split("/")[2]}</BreadcrumbLink>
+                      {pathname.split("/")[2]}
                     </Link>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               ) : (
                 <BreadcrumbList>
                   <BreadcrumbItem>
-                    <Link href={"/dashboard"}>
-                      <BreadcrumbLink>Dashboard</BreadcrumbLink>
-                    </Link>
+                    <Link href={"/dashboard"}>Dashboard</Link>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               )}

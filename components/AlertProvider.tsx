@@ -1,5 +1,5 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal, File } from "lucide-react";
+import { File } from "lucide-react";
 
 function AlertProvider() {
   return (

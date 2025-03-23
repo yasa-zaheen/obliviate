@@ -1,21 +1,16 @@
 "use client";
 
 // React
-import { useState, useTransition } from "react";
+import { useContext, useState, useTransition } from "react";
 
 // Components
 import { Button } from "./ui/button";
 import { Input } from "@/components/ui/input";
 
-// Clerk
-import { useUser } from "@clerk/nextjs";
-
 // Supabase
-import { createClient } from "@/utils/supabase/client";
 import LoadingCircleSpinner from "./Spinner";
 
 // Framer
-import { motion } from "motion/react";
 
 import { toast } from "sonner";
 import AlertProvider from "./AlertProvider";
@@ -24,6 +19,7 @@ import parsePdf from "@/utils/parsePdf";
 import uploadFile from "@/actions/uploadFile";
 import addFileToDatabase from "@/actions/addFileToDatabase";
 import { useRouter } from "next/navigation";
+import { FileContext } from "@/contexts/FileContext";
 
 // Actions
 
@@ -35,14 +31,11 @@ export default function FileInput() {
   const [file, setFile] = useState<File | null>(null);
   const [fileAlert, setFileAlert] = useState(false);
 
+  // Contexts
+  const { setFiles } = useContext(FileContext);
+
   // Transitions
   const [isPending, startTransition] = useTransition();
-
-  // Clerk
-  const { user } = useUser();
-
-  // Supabase
-  const supabase = createClient();
 
   // Functions
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,26 +44,23 @@ export default function FileInput() {
   };
 
   const handleFileUpload = async () => {
-    // Handle if no file is uploaded
     if (!file) {
       setFileAlert(true);
       return;
     }
-
     setFileAlert(false);
-
-    // TODO: Upload file to storage
 
     startTransition(async () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      // Send request to api/parse-pdf
       const extractedText = await parsePdf(file);
       const uploadRef = await uploadFile(file);
       const databaseRef = await addFileToDatabase(uploadRef!, extractedText);
 
       toast("Document uploaded successfully.");
+
+      setFiles((prevFiles: any[]) => [...prevFiles, databaseRef![0]]);
 
       router.push(`/dashboard/${databaseRef![0].id}`);
     });

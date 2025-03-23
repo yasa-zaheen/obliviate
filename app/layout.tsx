@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import MotionWrapper from "./MotionWrapper";
 
+import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+
+import MotionWrapper from "../components/MotionWrapper";
 import { Toaster } from "@/components/ui/sonner";
+
+import { FileContextProvider } from "@/contexts/FileContext";
 
 export const metadata: Metadata = {
   title: "Obliviate",
@@ -18,10 +21,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
-          <MotionWrapper>{children}</MotionWrapper>
-          <Toaster />
-        </body>
+        <FileContextProvider>
+          <body>
+            <MotionWrapper>{children}</MotionWrapper>
+            <Toaster />
+          </body>
+        </FileContextProvider>
       </html>
     </ClerkProvider>
   );

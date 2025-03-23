@@ -1,22 +1,14 @@
 "use client";
 
 // React
-import { useEffect, useState, useTransition } from "react";
+import { useContext, useEffect, useTransition } from "react";
 
 // Lucide
-import {
-  Home,
-  MessageCircleQuestion,
-  Search,
-  Settings2,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
+import { Home, Search, Sparkles } from "lucide-react";
 
 // ShadCn
 import { NavFavorites } from "@/components/nav-favorites";
 import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
 import {
   Sidebar,
   SidebarContent,
@@ -24,11 +16,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 
-// Supabase
-import { createClient } from "@/utils/supabase/client";
-
 // Clerk
 import { UserButton, useUser } from "@clerk/nextjs";
+import { FileContext } from "@/contexts/FileContext";
+import getUserFiles from "@/actions/getUserFiles";
 
 // This is sample data.
 const data = {
@@ -50,64 +41,21 @@ const data = {
       isActive: true,
     },
   ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-    },
-
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-    },
-    {
-      title: "Help",
-      url: "#",
-      icon: MessageCircleQuestion,
-    },
-  ],
-  favorites: [
-    {
-      name: "Project Management & Task Tracking",
-      url: "#",
-      emoji: "📊",
-    },
-    {
-      name: "Family Recipe Collection & Meal Planning",
-      url: "#",
-      emoji: "🍳",
-    },
-    {
-      name: "Fitness Tracker & Workout Routines",
-      url: "#",
-      emoji: "💪",
-    },
-  ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
 
-  const supabase = createClient();
-
   const [isPending, startTransition] = useTransition();
 
-  const [userData, setUserData] = useState<any>();
+  const { files, setFiles } = useContext(FileContext);
 
   useEffect(() => {
     startTransition(async () => {
-      const { data, error } = await supabase
-        .from("files")
-        .select("*")
-        .eq("email", user?.emailAddresses[0].emailAddress);
-
-      if (data?.length !== 0) {
-        setUserData(data);
-      }
+      const data = await getUserFiles();
+      setFiles(data!);
     });
-  }, [user]);
+  }, [user, setFiles]);
 
   return (
     <Sidebar className="border-r-0" {...props}>
@@ -124,10 +72,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        {userData && userData.length !== 0 ? (
-          <NavFavorites favorites={userData} />
+        {files && files.length !== 0 ? (
+          <NavFavorites favorites={files} />
         ) : null}
-        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

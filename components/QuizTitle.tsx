@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, useTransition } from "react";
+import { useContext, useState, useTransition } from "react";
 
 // ShadCn
 import { Button } from "./ui/button";
@@ -11,6 +11,7 @@ import { Input } from "./ui/input";
 import LoadingCircleSpinner from "./Spinner";
 import updateQuizSetTitle from "@/actions/updateQuizSetTitle";
 import { toast } from "sonner";
+import { QuizSetContext } from "@/contexts/QuizSetContext";
 
 function QuizTitle({
   data,
@@ -29,10 +30,19 @@ function QuizTitle({
   //Transitions
   const [isPending, startTransition] = useTransition();
 
+  // Contexts
+  const { quizzes, setQuizzes } = useContext(QuizSetContext);
+
   // Functions
   const handleQuizSetTitle = () => {
     startTransition(async () => {
       await updateQuizSetTitle(data[0].id, title);
+
+      setQuizzes((prevQuizzes: any) =>
+        prevQuizzes.map((quiz: any) =>
+          quiz.id === data[0].id ? { ...quiz, title } : quiz
+        )
+      );
 
       toast("Quiz set title updated.");
     });

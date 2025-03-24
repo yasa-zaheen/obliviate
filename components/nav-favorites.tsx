@@ -4,7 +4,7 @@
 import { usePathname } from "next/navigation";
 
 // Components
-import { ArrowUpRight, MoreHorizontal, StarOff, Trash2 } from "lucide-react";
+import { ArrowUpRight, Link2, MoreHorizontal, Trash2 } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -35,9 +35,13 @@ export function NavFavorites({
     coverImage: string;
   }[];
 }) {
+  // Routing
   const pathname = usePathname();
 
+  // ShadCn
   const { isMobile } = useSidebar();
+
+  // Functions
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -71,12 +75,7 @@ export function NavFavorites({
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
-                  <StarOff className="text-muted-foreground" />
-                  <span>Remove from Favorites</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  {/* <Link className="text-muted-foreground" /> */}
+                  <Link2 className="text-muted-foreground" />
                   <span>Copy Link</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
@@ -84,7 +83,7 @@ export function NavFavorites({
                   <span>Open in New Tab</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleDeleteQuizSet}>
                   <Trash2 className="text-muted-foreground" />
                   <span>Delete</span>
                 </DropdownMenuItem>

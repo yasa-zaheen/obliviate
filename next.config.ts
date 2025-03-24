@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "unbounce.com",
       },
+      {
+        hostname: "images.unsplash.com",
+      },
     ],
   },
   serverExternalPackages: ["pdf-parse"],

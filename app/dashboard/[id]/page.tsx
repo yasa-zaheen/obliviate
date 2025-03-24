@@ -1,3 +1,5 @@
+// React
+
 // Next
 import Image from "next/image";
 
@@ -9,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 // Components
 import SummarizeButton from "@/components/SummarizeButton";
+import QuizTitle from "@/components/QuizTitle";
 
 async function Page({ params }: { params: Promise<{ id: string }> }) {
   // Dynamic Routing
@@ -18,7 +21,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
   const supabase = createClient();
   const { data } = await supabase.from("quizSet").select("*").eq("id", id);
 
-  // Open AI
+  // States
 
   return (
     <div className="flex flex-col space-y-4">
@@ -38,7 +41,8 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
       </div>
       {/* Title */}
       {data && data?.length > 0 ? (
-        <p className="text-3xl font-bold">{data[0].title}</p>
+        // <p className="text-3xl font-bold">{data[0].title}</p>
+        <QuizTitle data={data} />
       ) : (
         <Skeleton className="w-full h-[30px] rounded-lg" />
       )}

@@ -83,7 +83,7 @@ export function NavFavorites({
                   <span>Open in New Tab</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleDeleteQuizSet}>
+                <DropdownMenuItem>
                   <Trash2 className="text-muted-foreground" />
                   <span>Delete</span>
                 </DropdownMenuItem>

@@ -6,7 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import MotionWrapper from "../components/MotionWrapper";
 import { Toaster } from "@/components/ui/sonner";
 
-import { FileContextProvider } from "@/contexts/FileContext";
+import { QuizSetContextProvider } from "@/contexts/QuizSetContext";
 
 export const metadata: Metadata = {
   title: "Obliviate",
@@ -21,12 +21,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <FileContextProvider>
+        <QuizSetContextProvider>
           <body>
             <MotionWrapper>{children}</MotionWrapper>
             <Toaster />
           </body>
-        </FileContextProvider>
+        </QuizSetContextProvider>
       </html>
     </ClerkProvider>
   );

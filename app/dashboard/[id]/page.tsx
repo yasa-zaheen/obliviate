@@ -1,3 +1,6 @@
+// Next
+import Image from "next/image";
+
 // Supabase
 import { createClient } from "@/utils/supabase/client";
 
@@ -13,18 +16,33 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
 
   // Supabase
   const supabase = createClient();
-  const { data } = await supabase.from("files").select("*").eq("id", id);
+  const { data } = await supabase.from("quizSet").select("*").eq("id", id);
 
   // Open AI
 
   return (
-    <div>
+    <div className="flex flex-col space-y-4">
+      {/* Image */}
+      <div className="w-full h-48 rounded-lg relative overflow-hidden">
+        {data ? (
+          <Image
+            src={`${data![0].coverImage}`}
+            alt="landing-img"
+            fill={true}
+            objectFit="cover"
+            className="select-none"
+          />
+        ) : (
+          <Skeleton className="w-full h-full rounded-lg" />
+        )}
+      </div>
+      {/* Title */}
       {data && data?.length > 0 ? (
-        <p className="text-3xl font-bold">{data[0].path}</p>
+        <p className="text-3xl font-bold">{data[0].title}</p>
       ) : (
         <Skeleton className="w-full h-[30px] rounded-lg" />
       )}
-      <SummarizeButton />
+      {/* <SummarizeButton /> */}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useTransition } from "react";
+import { useContext, useTransition } from "react";
 
 // Next
 import Image from "next/image";
@@ -27,9 +27,15 @@ import createQuizSet from "@/actions/createQuizSet";
 // ShadCn
 import { toast } from "sonner";
 
+// Contexts
+import { QuizSetContext } from "@/contexts/QuizSetContext";
+
 function CreateQuizSetDialog() {
   // Next
   const router = useRouter();
+
+  // Contexts
+  const { setQuizzes } = useContext(QuizSetContext);
 
   // Transitions
   const [isPending, startTransition] = useTransition();
@@ -40,6 +46,9 @@ function CreateQuizSetDialog() {
       const databaseRef = await createQuizSet();
 
       toast("Quiz set created successfully.");
+
+      setQuizzes((prevQuizzes: any[]) => [...prevQuizzes, databaseRef![0]]);
+
       router.push(`/dashboard/${databaseRef![0].id}`);
     });
   };

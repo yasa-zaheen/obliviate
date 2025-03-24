@@ -30,8 +30,9 @@ export function NavFavorites({
   favorites: {
     id: string;
     email: string;
-    filePath: string;
-    path: string;
+    description: string;
+    title: string;
+    coverImage: string;
   }[];
 }) {
   const pathname = usePathname();
@@ -40,7 +41,7 @@ export function NavFavorites({
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Files</SidebarGroupLabel>
+      <SidebarGroupLabel>Quizzes</SidebarGroupLabel>
       <SidebarMenu>
         {favorites.map((item) => (
           <SidebarMenuItem key={item.id}>
@@ -54,7 +55,7 @@ export function NavFavorites({
                     : ""
                 } active:scale-95`}
               >
-                {item.path}
+                {item.title}
               </Link>
             </SidebarMenuButton>
             <DropdownMenu>

@@ -20,6 +20,8 @@ import {
 import { UserButton, useUser } from "@clerk/nextjs";
 import { FileContext } from "@/contexts/FileContext";
 import getUserFiles from "@/actions/getUserFiles";
+import { QuizSetContext } from "@/contexts/QuizSetContext";
+import getUserQuizzes from "@/actions/getUserQuizzes";
 
 // This is sample data.
 const data = {
@@ -44,18 +46,21 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // Clerk
   const { user } = useUser();
 
+  // Transitions
   const [isPending, startTransition] = useTransition();
 
-  const { files, setFiles } = useContext(FileContext);
+  // Contexts
+  const { quizzes, setQuizzes } = useContext(QuizSetContext);
 
   useEffect(() => {
     startTransition(async () => {
-      const data = await getUserFiles();
-      setFiles(data!);
+      const quizzes = await getUserQuizzes();
+      setQuizzes(quizzes!);
     });
-  }, [user, setFiles]);
+  }, [user, setQuizzes]);
 
   return (
     <Sidebar className="border-r-0" {...props}>
@@ -72,8 +77,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        {files && files.length !== 0 ? (
-          <NavFavorites favorites={files} />
+        {quizzes && quizzes.length !== 0 ? (
+          <NavFavorites favorites={quizzes} />
         ) : null}
       </SidebarContent>
       <SidebarRail />

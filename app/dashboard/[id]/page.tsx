@@ -42,7 +42,11 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
       {/* Title */}
       {data && data?.length > 0 ? (
         // <p className="text-3xl font-bold">{data[0].title}</p>
-        <QuizTitle data={data} />
+        <div>
+          <QuizTitle data={data} />
+          <p className="text-sm opacity-50 my-2">{data[0].description}</p>
+          <hr />
+        </div>
       ) : (
         <Skeleton className="w-full h-[30px] rounded-lg" />
       )}

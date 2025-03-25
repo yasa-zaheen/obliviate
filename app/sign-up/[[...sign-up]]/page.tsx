@@ -1,9 +1,15 @@
 "use client";
 
+// Next
+import Image from "next/image";
+
+// Clerk
 import { SignUp } from "@clerk/nextjs";
 
+// Framer Motion
 import { motion } from "motion/react";
 
+// Lucide
 import { GalleryVerticalEnd } from "lucide-react";
 
 export default function LoginPage() {
@@ -15,11 +21,13 @@ export default function LoginPage() {
       className="grid min-h-svh lg:grid-cols-2"
     >
       {/* Left Side */}
-      <div className="relative hidden bg-muted lg:block">
-        <img
+      <div className="relative h-svh overflow-hidden -z-10">
+        <Image
           src="https://images.unsplash.com/photo-1741114056855-d4e6d12197df?q=80&w=2328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          fill={true}
+          objectFit="cover"
+          className="select-none"
         />
       </div>
 

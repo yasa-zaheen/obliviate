@@ -1,8 +1,16 @@
 "use client";
 
-import { SignInButton } from "@clerk/nextjs";
-import { GalleryVerticalEnd } from "lucide-react";
+// Next
 import Link from "next/link";
+
+// Clerk
+import { SignInButton } from "@clerk/nextjs";
+
+// Components
+import { Button } from "./ui/button";
+
+// Lucide
+import { GalleryVerticalEnd } from "lucide-react";
 
 function HomeNav() {
   return (

@@ -1,6 +1,6 @@
 export default async function parsePdf(file: File) {
   try {
-    const response = await fetch("api/parse-pdf", {
+    const response = await fetch("/api/parse-pdf", {
       method: "POST",
       body: file,
     });

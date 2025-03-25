@@ -3,7 +3,11 @@
 // React
 import { useContext, useState, useTransition } from "react";
 
+// Next
+import { useRouter } from "next/navigation";
+
 // Components
+import AlertProvider from "./AlertProvider";
 import { Button } from "./ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -13,26 +17,26 @@ import LoadingCircleSpinner from "./Spinner";
 // Framer
 
 import { toast } from "sonner";
-import AlertProvider from "./AlertProvider";
 
+// Context
+import { FileContext } from "@/contexts/FileContext";
+
+// Utils
 import parsePdf from "@/utils/parsePdf";
+
+// Server Actions
 import uploadFile from "@/actions/uploadFile";
 import addFileToDatabase from "@/actions/addFileToDatabase";
-import { useRouter } from "next/navigation";
-import { FileContext } from "@/contexts/FileContext";
 
 // Actions
 
-export default function FileInput() {
+export default function FileInput(quizSetId: any) {
   // Next
   const router = useRouter();
 
   // States
   const [file, setFile] = useState<File | null>(null);
   const [fileAlert, setFileAlert] = useState(false);
-
-  // Contexts
-  const { setFiles } = useContext(FileContext);
 
   // Transitions
   const [isPending, startTransition] = useTransition();
@@ -56,13 +60,15 @@ export default function FileInput() {
 
       const extractedText = await parsePdf(file);
       const uploadRef = await uploadFile(file);
-      const databaseRef = await addFileToDatabase(uploadRef!, extractedText);
+      const databaseRef = await addFileToDatabase(
+        uploadRef!,
+        quizSetId.quizSetId,
+        extractedText
+      );
 
       toast("Document uploaded successfully.");
 
-      setFiles((prevFiles: any[]) => [...prevFiles, databaseRef![0]]);
-
-      router.push(`/dashboard/${databaseRef![0].id}`);
+      // router.push(`/dashboard/${databaseRef![0].id}`);
     });
   };
 

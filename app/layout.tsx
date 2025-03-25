@@ -1,14 +1,18 @@
 import "./globals.css";
 
+// Next
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+
+// Clerk
 import { ClerkProvider } from "@clerk/nextjs";
 
-import MotionWrapper from "../components/MotionWrapper";
+// Components
+import MotionWrapper from "@/components/MotionWrapper";
 import { Toaster } from "@/components/ui/sonner";
 
+// Context
 import { QuizSetContextProvider } from "@/contexts/QuizSetContext";
-
-import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Obliviate",

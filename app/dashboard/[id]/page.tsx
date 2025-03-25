@@ -44,7 +44,7 @@ async function Page({ params }: { params: Promise<{ id: string }> }) {
         )}
       </div>
       {/* Title */}
-      <FileInput />
+      <FileInput quizSetId={data![0].id} />
       {/* <SummarizeButton /> */}
     </div>
   );

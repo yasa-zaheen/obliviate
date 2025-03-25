@@ -6,13 +6,10 @@ import Link from "next/link";
 // Clerk
 import { SignInButton } from "@clerk/nextjs";
 
-// Components
-import { Button } from "./ui/button";
-
 // Lucide
 import { GalleryVerticalEnd } from "lucide-react";
 
-function HomeNav() {
+function HomePageNav() {
   return (
     <div className="flex items-center justify-between w-full fixed p-6 bg-[#ffffff2f] backdrop-blur-3xl">
       {/* Title */}
@@ -34,4 +31,4 @@ function HomeNav() {
     </div>
   );
 }
-export default HomeNav;
+export default HomePageNav;

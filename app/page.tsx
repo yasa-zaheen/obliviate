@@ -4,8 +4,8 @@
 import Image from "next/image";
 
 // Components
-import HomeNav from "@/components/HomeNav";
-import HomePageText from "@/components/HomePageText";
+import HomePageNav from "@/app/components/HomePageNav";
+import HomePageText from "@/app/components/HomePageText";
 
 // Framer motion
 
@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className="max-w-screen">
       {/* Navbar */}
-      <HomeNav />
+      <HomePageNav />
 
       {/* Main Container */}
       <div>

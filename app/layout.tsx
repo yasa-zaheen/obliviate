@@ -1,5 +1,8 @@
 import "./globals.css";
 
+// Context
+import { QuizSetContextProvider } from "@/contexts/QuizSetContext";
+
 // Next
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -8,11 +11,10 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 // Components
-import MotionWrapper from "@/components/MotionWrapper";
-import { Toaster } from "@/components/ui/sonner";
+import GlobalMotionWrapper from "@/app/components/GlobalMotionWrapper";
 
-// Context
-import { QuizSetContextProvider } from "@/contexts/QuizSetContext";
+// ShadCn
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Obliviate",
@@ -32,14 +34,14 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={inter.className}>
-        <QuizSetContextProvider>
+      <QuizSetContextProvider>
+        <html lang="en" className={inter.className}>
           <body>
-            <MotionWrapper>{children}</MotionWrapper>
+            <GlobalMotionWrapper>{children}</GlobalMotionWrapper>
             <Toaster />
           </body>
-        </QuizSetContextProvider>
-      </html>
+        </html>
+      </QuizSetContextProvider>
     </ClerkProvider>
   );
 }

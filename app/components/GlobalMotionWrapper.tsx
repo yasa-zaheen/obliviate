@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-function MotionWrapper({ children }: { children: React.ReactNode }) {
+function GlobalMotionWrapper({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -13,4 +13,4 @@ function MotionWrapper({ children }: { children: React.ReactNode }) {
     </motion.div>
   );
 }
-export default MotionWrapper;
+export default GlobalMotionWrapper;

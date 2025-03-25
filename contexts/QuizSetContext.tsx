@@ -3,19 +3,19 @@
 import { createContext, useState } from "react";
 
 export const QuizSetContext = createContext<{
-  quizzes: any[];
-  setQuizzes: (files: any) => void;
-}>({ quizzes: [], setQuizzes: () => {} });
+  quizSets: any[];
+  setQuizSets: (files: any) => void;
+}>({ quizSets: [], setQuizSets: () => {} });
 
 export function QuizSetContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [quizzes, setQuizzes] = useState<any[]>([]);
+  const [quizSets, setQuizSets] = useState<any[]>([]);
 
   return (
-    <QuizSetContext.Provider value={{ quizzes, setQuizzes }}>
+    <QuizSetContext.Provider value={{ quizSets, setQuizSets }}>
       {children}
     </QuizSetContext.Provider>
   );

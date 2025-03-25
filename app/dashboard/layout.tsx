@@ -1,6 +1,7 @@
 "use client";
 
 // Next
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // ShadCn
@@ -18,8 +19,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
-import AlertProvider from "@/components/AlertProvider";
 
 export default function DashboardLayout({
   children,

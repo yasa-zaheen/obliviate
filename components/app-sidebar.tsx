@@ -3,8 +3,11 @@
 // React
 import { useContext, useEffect, useTransition } from "react";
 
-// Lucide
-import { Home, Search, Sparkles } from "lucide-react";
+// Context
+import { QuizSetContext } from "@/contexts/QuizSetContext";
+
+// Server actions
+import getUserQuizzes from "@/actions/getUserQuizzes";
 
 // ShadCn
 import { NavFavorites } from "@/components/nav-favorites";
@@ -18,10 +21,9 @@ import {
 
 // Clerk
 import { UserButton, useUser } from "@clerk/nextjs";
-import { FileContext } from "@/contexts/FileContext";
-import getUserFiles from "@/actions/getUserFiles";
-import { QuizSetContext } from "@/contexts/QuizSetContext";
-import getUserQuizzes from "@/actions/getUserQuizzes";
+
+// Lucide
+import { Home, Search, Sparkles } from "lucide-react";
 
 // This is sample data.
 const data = {
@@ -53,20 +55,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [isPending, startTransition] = useTransition();
 
   // Contexts
-  const { quizzes, setQuizzes } = useContext(QuizSetContext);
+  const { quizSets, setQuizSets } = useContext(QuizSetContext);
+
+  // Effects
 
   useEffect(() => {
     startTransition(async () => {
       const quizzes = await getUserQuizzes();
-      setQuizzes(quizzes!);
+      setQuizSets(quizzes!);
     });
-  }, [user, setQuizzes]);
+  }, [user, setQuizSets]);
 
   return (
     <Sidebar className="border-r-0" {...props}>
+      {/* Sidebar Header */}
       <SidebarHeader>
         <div className="flex items-center p-2 space-x-2">
+          {/* Clerk User Account Button */}
           <UserButton />
+
+          {/* Clerk user information */}
           <div className="flex flex-col justify-around">
             <p className="text-sm">{user?.fullName}</p>
             <p className="text-xs opacity-50">
@@ -77,8 +85,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        {quizzes && quizzes.length !== 0 ? (
-          <NavFavorites favorites={quizzes} />
+        {quizSets && quizSets.length !== 0 ? (
+          <NavFavorites favorites={quizSets} />
         ) : null}
       </SidebarContent>
       <SidebarRail />

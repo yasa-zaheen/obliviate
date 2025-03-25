@@ -3,6 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* #BD501E, #E8415A, #522136 */
+
 :root {
   --radius: 0.625rem;
   --card: oklch(1 0 0);

@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useContext, useTransition } from "react";
+import { useContext, useState, useTransition } from "react";
 
 // Next
 import Image from "next/image";
@@ -20,6 +20,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 // Server Action
 import createQuizSet from "@/actions/createQuizSet";
@@ -34,6 +36,10 @@ function CreateQuizSetDialog() {
   // Next
   const router = useRouter();
 
+  // States
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   // Contexts
   const { setQuizzes } = useContext(QuizSetContext);
 
@@ -43,7 +49,7 @@ function CreateQuizSetDialog() {
   // Functions
   const handleCreateQuizSet = async () => {
     startTransition(async () => {
-      const databaseRef = await createQuizSet();
+      const databaseRef = await createQuizSet(title, description);
 
       toast("Quiz set created successfully.");
 
@@ -76,6 +82,30 @@ function CreateQuizSetDialog() {
               or class notes. Our system will generate questions based on your
               content, helping you review key concepts and prepare for exams.
             </DialogDescription>
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                type="text"
+                id="email"
+                placeholder="Enter title here"
+                value={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="title">Description</Label>
+              <Input
+                type="text"
+                id="description"
+                placeholder="Enter description here"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </div>
           </div>
         </DialogHeader>
         <DialogFooter className="px-6 pb-6">

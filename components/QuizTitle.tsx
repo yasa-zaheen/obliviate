@@ -49,23 +49,26 @@ function QuizTitle({
   };
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex flex-col items-center space-x-4 absolute text-white p-4">
       <Input
         type="text"
         placeholder="Title"
         value={title}
-        className="text-xl! font-bold!"
+        className="text-xl! font-bold! border-none!"
         onChange={(e) => {
           setTitle(e.target.value);
         }}
       />
-      <Button
+      <p className="text-sm opacity-75">{data[0].description}</p>
+
+      {/* Handle this later in page settings */}
+      {/* <Button
         onClick={handleQuizSetTitle}
         className="cursor-pointer bg-gradient-to-br from-[#c9def4] via-[#f5ccd4] to-[#b8a4c9] hover:shadow-lg active:scale-99 active:shadow-none px-4 py-2 rounded-lg text-white text-sm duration-100 ease-in-out"
         disabled={isPending}
       >
         {!isPending ? <p> Save Changes</p> : <LoadingCircleSpinner />}
-      </Button>
+      </Button> */}
     </div>
   );
 }

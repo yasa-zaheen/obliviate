@@ -2,7 +2,6 @@
 
 // Next
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 // Components
 import {
@@ -12,8 +11,6 @@ import {
 } from "@/components/ui/sidebar";
 
 export function NavMain({ items }: { items: NavMainProps[] }) {
-  const pathname = usePathname();
-
   return (
     <SidebarMenu>
       {items.map((item) => (

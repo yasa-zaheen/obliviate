@@ -14,7 +14,7 @@ export function NavFavorites({ favorites }: { favorites: QuizSet[] }) {
       <SidebarGroupLabel>Your Quiz Sets</SidebarGroupLabel>
       <SidebarMenu>
         {favorites.map((item) => (
-          <MainSidebarMenuItem item={item} />
+          <MainSidebarMenuItem key={item.id} item={item} />
         ))}
       </SidebarMenu>
     </SidebarGroup>

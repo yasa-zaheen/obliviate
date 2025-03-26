@@ -22,10 +22,13 @@ declare global {
     setQuizSets: (quizSets: Quiz[]) => void;
   }
 
-  // // Props for components
-  // interface NavFavoritesProps {
-  //   favorites: Quiz[];
-  // }
+  // Props for components
+  interface NavMainProps {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    isActive?: boolean;
+  }
 
   // interface QuizTitleProps {
   //   data: Quiz[];

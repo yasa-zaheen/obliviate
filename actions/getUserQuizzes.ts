@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { createClient } from "@/utils/supabase/server";
 
-export default async function getUserQuizzes() {
+export default async function getUserQuizzes(): Promise<QuizSet[]> {
   const user = await currentUser();
   const supabase = await createClient();
 
@@ -12,6 +12,10 @@ export default async function getUserQuizzes() {
     .select("*")
     .eq("email", user?.emailAddresses[0].emailAddress);
 
-  if (error) console.log(error);
-  else return data;
+  if (error) {
+    console.log(error);
+    return [] as QuizSet[];
+  } else {
+    return data as QuizSet[];
+  }
 }

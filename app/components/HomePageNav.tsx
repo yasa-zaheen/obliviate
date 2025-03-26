@@ -13,7 +13,7 @@ function HomePageNav() {
   return (
     <div className="flex items-center justify-between w-full fixed p-6 bg-[#ffffff2f] backdrop-blur-3xl">
       {/* Title */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
         <GalleryVerticalEnd className="size-4" />
         Obliviate Inc.
       </div>

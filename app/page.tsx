@@ -15,22 +15,19 @@ export default function Home() {
       {/* Navbar */}
       <HomePageNav />
 
-      {/* Main Container */}
-      <div>
-        {/* Hero Section */}
-        <div className="relative h-svh overflow-hidden -z-10">
-          {/* Image */}
-          <Image
-            src="https://unbounce.com/photos/Gradient-Background.png"
-            alt="landing-img"
-            fill={true}
-            objectFit="cover"
-            className="select-none"
-          />
+      {/* Hero Section */}
+      <div className="relative h-svh overflow-hidden -z-10">
+        {/* Image */}
+        <Image
+          src="https://unbounce.com/photos/Gradient-Background.png"
+          alt="landing-img"
+          fill={true}
+          objectFit="cover"
+          className="select-none"
+        />
 
-          {/* Text */}
-          <HomePageText />
-        </div>
+        {/* Text */}
+        <HomePageText />
       </div>
     </div>
   );

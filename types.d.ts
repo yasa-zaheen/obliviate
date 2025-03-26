@@ -18,8 +18,10 @@ declare global {
 
   // Context types
   interface QuizSetContextType {
-    quizSets: Quiz[];
-    setQuizSets: (quizSets: Quiz[]) => void;
+    quizSets: QuizSet[];
+    setQuizSets: (
+      quizSets: QuizSet[] | ((prevQuizSet: QuizSet[]) => QuizSet[])
+    ) => void;
   }
 
   // Props for components

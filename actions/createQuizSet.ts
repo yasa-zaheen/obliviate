@@ -6,7 +6,7 @@ import { createClient } from "@/utils/supabase/server";
 export default async function createQuizSet(
   title: string,
   description: string
-) {
+): Promise<QuizSet[]> {
   const user = await currentUser();
   const supabase = await createClient();
 
@@ -21,6 +21,10 @@ export default async function createQuizSet(
     })
     .select();
 
-  if (error) console.log(error);
-  return data;
+  if (error) {
+    console.log(error);
+    return [] as QuizSet[];
+  } else {
+    return data as QuizSet[];
+  }
 }

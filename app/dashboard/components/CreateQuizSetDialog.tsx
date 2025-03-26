@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // Components
-import LoadingCircleSpinner from "./Spinner";
+import LoadingCircleSpinner from "../../../components/Spinner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -41,7 +41,7 @@ function CreateQuizSetDialog() {
   const [description, setDescription] = useState("");
 
   // Contexts
-  const { setQuizzes } = useContext(QuizSetContext);
+  const { quizSets, setQuizSets } = useContext(QuizSetContext);
 
   // Transitions
   const [isPending, startTransition] = useTransition();
@@ -53,7 +53,7 @@ function CreateQuizSetDialog() {
 
       toast("Quiz set created successfully.");
 
-      setQuizzes((prevQuizzes: any[]) => [...prevQuizzes, databaseRef![0]]);
+      setQuizSets((prevQuizSet: QuizSet[]) => [...prevQuizSet, databaseRef[0]]);
 
       router.push(`/dashboard/${databaseRef![0].id}`);
     });

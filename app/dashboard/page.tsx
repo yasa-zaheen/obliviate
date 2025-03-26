@@ -1,8 +1,5 @@
-// import FileInput from "@/components/FileInput";
-
 // Components
-import CreateQuizSetDialog from "@/components/CreateQuizSetDialog";
-import { Button } from "@/components/ui/button";
+import CreateQuizSetDialog from "@/app/dashboard/components/CreateQuizSetDialog";
 
 export default function Page() {
   return (
